@@ -4,7 +4,7 @@ import { generateToken } from "../utils/utils.js";
 import { sendWelcomeEmail } from "../emails/emailHandler.js";
 import { ENV } from "../lib/env.js";
 import jwt from "jsonwebtoken";
-
+import cloudinary from '../lib/cloudinary.js'
 export const signup = async (req, res) => {
     const { fullName, email, password } = req.body;
 
@@ -130,4 +130,21 @@ export const logout = (_, res) => {
         status: true,
         message: 'Logged Out Successfully.'
     })
+}
+
+
+export const updateProfile = async (req,res)=>{
+    try{
+        const {profilePic} = req.body;
+        if(!profilePic) return res.status(400).json({message:"Profile pic is required."});
+
+        const userId = req.user._id;
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
+        const updatedUser = await User.findByIdAndUpdate(userId,{profilePic:uploadResponse.secure_url},{new:true}).select("-password");
+
+        res.status(200).json(updateUser)
+
+    }catch(e) {
+        console.log(e.message);
+    }
 }

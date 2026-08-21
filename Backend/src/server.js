@@ -5,9 +5,10 @@ import messageRoutes from './routes/message.router.js';
 import {connectDB} from "./lib/db.js";
 dotenv.config();
 import {ENV} from './lib/env.js'
+import cookieParser from 'cookie-parser';
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser()); 
 
 const PORT = ENV.PORT || 5000;
 

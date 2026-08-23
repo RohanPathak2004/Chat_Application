@@ -15,6 +15,8 @@ export const arcjetProtection = async(req,res,next)=>{
                 return res.status(403).json({ message:"Access denied by security policy." });
         }
 
+
+        //spoofbots are bots that behaves like human
         if (decision.result.some(isSpoofedBot)) {
             return res.status(403).json({
                 error:"Spoofed bot detected",

@@ -13,7 +13,7 @@ app.use(cookieParser());
 const PORT = ENV.PORT || 5000;
 
 app.use("/api/auth",authRoutes);
-app.use("api/message",messageRoutes);
+app.use("/api/message",messageRoutes);
 app.get("/health",(req,res)=>{res.status(200).json("UP")})
 
 app.listen(PORT,()=>{
